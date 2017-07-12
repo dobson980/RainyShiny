@@ -1,22 +1,26 @@
 //
-//  WeatherViewController.swift
-//  RainyShiny
+//  WeatherVC.swift
+//  rainyshinycloudy
 //
-//  Created by Tom Dobson on 7/9/17.
-//  Copyright © 2017 Dobson Studios. All rights reserved.
+//  Created by Caleb Stultz on 7/26/16.
+//  Copyright © 2016 Caleb Stultz. All rights reserved.
 //
 
 import UIKit
+import CoreLocation
 import Alamofire
 
-class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var currentWeatherImage: UIImageView!
     @IBOutlet weak var currentWeatherTypeLabel: UILabel!
     @IBOutlet weak var weatherTableView: UITableView!
+    
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
     
     var currentWeather: CurrentWeather!
     var forecast: Forecast!
@@ -25,19 +29,60 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startMonitoringSignificantLocationChanges()
+        
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
         
-            print(FORECAST_WEATHER_URL)
-        
-            currentWeather = CurrentWeather()
+        currentWeather = CurrentWeather()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        locationAuthStatus()
+    }
+    
+    func locationAuthStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            currentLocation = locationManager.location
+            Location.sharedInstance.latitude = currentLocation.coordinate.latitude
+            print(currentLocation.coordinate.latitude)
+            Location.sharedInstance.longitude = currentLocation.coordinate.longitude
+            print(currentLocation.coordinate.longitude)
             currentWeather.downloadWeatherDetails {
                 self.downloadForecastData {
                     self.updateMainUI()
                 }
-                
-                
             }
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+            locationAuthStatus()
+        }
+    }
+    
+    func downloadForecastData(completed: @escaping DownloadComplete) {
+        //Downloading forecast weather data for TableView
+        Alamofire.request(FORECAST_URL).responseJSON { response in
+            let result = response.result
+            
+            if let dict = result.value as? Dictionary<String, AnyObject> {
+                
+                if let list = dict["list"] as? [Dictionary<String, AnyObject>] {
+                    
+                    for obj in list {
+                        let forecast = Forecast(weatherDict: obj)
+                        self.forecasts.append(forecast)
+                        print(obj)
+                    }
+                    self.forecasts.remove(at: 0)
+                    self.weatherTableView.reloadData()
+                }
+            }
+            completed()
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -50,7 +95,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell {
+        if let cell = weatherTableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell {
             
             let forecast = forecasts[indexPath.row]
             cell.configureCell(forecast: forecast)
@@ -64,30 +109,10 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         dateLabel.text = currentWeather.date
         currentTempLabel.text = "\(currentWeather.currentTemp)"
         currentWeatherTypeLabel.text = currentWeather.weatherType
-        currentLocationLabel.text = currentWeather.cityName
+        locationLabel.text = currentWeather.cityName
         currentWeatherImage.image = UIImage(named: currentWeather.weatherType)
     }
     
-    func downloadForecastData(completed: @escaping DownloadComplete) {
-        let forecastURL = URL(string: FORECAST_WEATHER_URL)!
-        Alamofire.request(forecastURL).responseJSON { response in
-            let result = response.result
-            
-            if let dict = result.value as? Dictionary<String, AnyObject> {
-                if let list = dict["list"] as? [Dictionary<String, AnyObject>] {
-                    
-                    for obj in list{
-                        let forecast = Forecast(weatherDict: obj)
-                        self.forecasts.append(forecast)
-                        print(obj)
-                    }
-                    self.forecasts.remove(at: 0)
-                    self.weatherTableView.reloadData()
-                }
-            }
-            completed()
-        }
-    }
-
 }
+
 

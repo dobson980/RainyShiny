@@ -16,6 +16,7 @@
 		3558068F1F1288B400C2499F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3558068D1F1288B400C2499F /* Main.storyboard */; };
 		355806911F1288B400C2499F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355806901F1288B400C2499F /* Assets.xcassets */; };
 		355806941F1288B400C2499F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 355806921F1288B400C2499F /* LaunchScreen.storyboard */; };
+		35A452D81F15941700393D15 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A452D71F15941700393D15 /* Location.swift */; };
 		C3707615A9DD5F019FAD5014 /* Pods_RainyShiny.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C6C4CC46B70BDC55D69397 /* Pods_RainyShiny.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		355806901F1288B400C2499F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		355806931F1288B400C2499F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		355806951F1288B400C2499F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35A452D71F15941700393D15 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		53C6C4CC46B70BDC55D69397 /* Pods_RainyShiny.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RainyShiny.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		587084E28136444017569F0E /* Pods-RainyShiny.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RainyShiny.release.xcconfig"; path = "Pods/Target Support Files/Pods-RainyShiny/Pods-RainyShiny.release.xcconfig"; sourceTree = "<group>"; };
 		F84184E210F7F73D0F696BC7 /* Pods-RainyShiny.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RainyShiny.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RainyShiny/Pods-RainyShiny.debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				355806901F1288B400C2499F /* Assets.xcassets */,
 				355806921F1288B400C2499F /* LaunchScreen.storyboard */,
 				355806951F1288B400C2499F /* Info.plist */,
+				35A452D71F15941700393D15 /* Location.swift */,
 			);
 			path = RainyShiny;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				351A5C0C1F1352A800FFC443 /* currentWeather.swift in Sources */,
 				351A5C0A1F13501D00FFC443 /* Constants.swift in Sources */,
 				3547752E1F14640B008D42E4 /* Forecast.swift in Sources */,
+				35A452D81F15941700393D15 /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

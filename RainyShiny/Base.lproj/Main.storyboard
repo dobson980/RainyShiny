@@ -177,11 +177,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="currentLocationLabel" destination="8Lz-vJ-GM5" id="bxX-xu-uBC"/>
                         <outlet property="currentTempLabel" destination="K2r-PU-4gr" id="Zjk-7u-PlS"/>
                         <outlet property="currentWeatherImage" destination="3fT-iQ-KIK" id="ogy-ff-Csb"/>
                         <outlet property="currentWeatherTypeLabel" destination="g5b-Ok-zuV" id="yVb-JX-ecp"/>
                         <outlet property="dateLabel" destination="uYI-UY-XE7" id="leD-mY-DRD"/>
+                        <outlet property="locationLabel" destination="8Lz-vJ-GM5" id="4ge-I9-wuD"/>
                         <outlet property="weatherTableView" destination="ipH-7a-im5" id="Jff-Kl-Eaa"/>
                     </connections>
                 </viewController>
